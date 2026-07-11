@@ -1,64 +1,70 @@
 import React from 'react';
 
+type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success';
+type ButtonSize = 'small' | 'medium' | 'large';
+
 interface PixelButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger' | 'success';
-  size?: 'small' | 'medium' | 'large';
-  children: React.ReactNode;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   icon?: React.ReactNode;
   fullWidth?: boolean;
+  loading?: boolean;
 }
 
 /**
  * PixelButton Component
  * 
- * A pixel-perfect button styled with golden orange accents.
- * Variants: primary (orange), secondary (dark), danger (red), success (green)
+ * Premium pixel art button with multiple variants and sizes.
+ * Features smooth animations and professional styling.
  * 
- * Design: 16-bit retro game style with instant feedback animations
+ * Design: Retro arcade aesthetic with modern interactions
  */
 export const PixelButton: React.FC<PixelButtonProps> = ({
   variant = 'primary',
   size = 'medium',
-  children,
   icon,
   fullWidth = false,
+  loading = false,
   className = '',
+  children,
+  disabled,
   ...props
 }) => {
-  const variantStyles = {
+  const baseClasses = 'pixel-btn';
+  
+  const variantClasses = {
     primary: 'bg-primary text-black border-primary',
-    secondary: 'bg-pixel-gray text-white border-pixel-gray-light',
-    danger: 'bg-pixel-red text-white border-pixel-red',
-    success: 'bg-pixel-green text-black border-pixel-green',
+    secondary: 'secondary',
+    danger: 'danger',
+    success: 'success',
   };
 
-  const sizeStyles = {
-    small: 'px-4 py-2 text-sm',
-    medium: 'px-6 py-3 text-base',
-    large: 'px-8 py-4 text-lg',
+  const sizeClasses = {
+    small: 'small',
+    medium: '',
+    large: 'large',
   };
 
   return (
     <button
       className={`
-        pixel-btn
-        ${variantStyles[variant]}
-        ${sizeStyles[size]}
+        ${baseClasses}
+        ${variantClasses[variant]}
+        ${sizeClasses[size]}
         ${fullWidth ? 'w-full' : ''}
-        font-bold uppercase
-        border-2
-        transition-all duration-100 ease-out
-        active:scale-95
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center gap-2
-        hover:opacity-90
+        ${loading ? 'opacity-75 cursor-wait' : ''}
         ${className}
       `}
+      disabled={disabled || loading}
       {...props}
     >
-      {icon && <span className="inline-flex">{icon}</span>}
+      {loading && (
+        <span className="inline-flex animate-spin">
+          ⚙️
+        </span>
+      )}
+      {icon && !loading && <span className="inline-flex">{icon}</span>}
       {children}
     </button>
   );

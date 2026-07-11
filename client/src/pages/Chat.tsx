@@ -16,10 +16,10 @@ interface Message {
 /**
  * Chat Page - Conversation Interface
  * 
- * Features AILA mascot on the left with state changes,
- * chat messages in retro terminal style, and TTS loader.
+ * Features professional chat layout with AILA mascot,
+ * message history, and smooth animations.
  * 
- * Design: Terminal-like chat interface with pixel art styling
+ * Design: Terminal-style interface with modern polish
  */
 export default function Chat() {
   const [, setLocation] = useLocation();
@@ -47,7 +47,6 @@ export default function Chat() {
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputValue,
@@ -60,7 +59,6 @@ export default function Chat() {
     setMascotState('working');
     setIsLoading(true);
 
-    // Simulate AI response
     setTimeout(() => {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -88,9 +86,11 @@ export default function Chat() {
   return (
     <div className="min-h-screen bg-black flex flex-col">
       {/* Header */}
-      <div className="bg-pixel-gray border-b-4 border-primary px-4 py-4">
+      <div className="bg-secondary border-b-4 border-primary px-4 py-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-primary uppercase">CHAT</h1>
+          <h1 className="text-4xl font-bold text-primary uppercase tracking-widest">
+            CHAT
+          </h1>
           <PixelButton
             variant="secondary"
             size="small"
@@ -105,28 +105,33 @@ export default function Chat() {
       {/* Main Chat Area */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left: Mascot */}
-        <div className="hidden md:flex md:w-1/4 bg-pixel-gray border-r-4 border-primary items-center justify-center p-4">
+        <div className="hidden md:flex md:w-1/4 bg-secondary border-r-4 border-primary items-center justify-center p-4">
           <Mascot state={mascotState} size="large" animated={true} />
         </div>
 
         {/* Right: Chat Messages */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col bg-black">
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black">
-            {messages.map((message) => (
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message, index) => (
               <div
                 key={message.id}
-                className={`flex ${
-                  message.sender === 'user' ? 'justify-end' : 'justify-start'
-                }`}
+                className={`
+                  flex animate-pixel-fade-in
+                  ${message.sender === 'user' ? 'justify-end' : 'justify-start'}
+                `}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <PixelFrame
                   variant={message.sender === 'user' ? 'compact' : 'default'}
-                  className={`max-w-xs md:max-w-md ${
-                    message.sender === 'user'
-                      ? 'bg-primary text-black'
-                      : 'bg-card text-foreground'
-                  }`}
+                  className={`
+                    max-w-xs md:max-w-md
+                    ${
+                      message.sender === 'user'
+                        ? 'bg-primary text-black border-primary'
+                        : 'bg-card text-foreground border-primary'
+                    }
+                  `}
                 >
                   <p className="text-sm font-mono break-words">{message.text}</p>
                   <p className="text-xs mt-2 opacity-70">
@@ -138,7 +143,7 @@ export default function Chat() {
 
             {/* TTS Loader */}
             {isLoading && (
-              <div className="flex justify-start">
+              <div className="flex justify-start animate-pixel-fade-in">
                 <PixelFrame variant="compact">
                   <TTSLoader isActive={true} text="THINKING..." />
                 </PixelFrame>
@@ -149,7 +154,7 @@ export default function Chat() {
           </div>
 
           {/* Input Area */}
-          <div className="border-t-4 border-primary bg-pixel-gray p-4">
+          <div className="border-t-4 border-primary bg-secondary p-4">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -175,7 +180,7 @@ export default function Chat() {
       </div>
 
       {/* Footer Navigation */}
-      <div className="bg-pixel-gray border-t-4 border-primary px-4 py-4">
+      <div className="bg-secondary border-t-4 border-primary px-4 py-4">
         <div className="flex justify-center gap-4 max-w-4xl mx-auto flex-wrap">
           <PixelButton
             variant="secondary"

@@ -3,6 +3,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Import pixel-perfect fonts */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -42,59 +45,64 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Pixel Art Theme - AILA */
 :root {
-  /* Pixel Art Colors */
-  --pixel-orange: #FFA500;
-  --pixel-orange-dark: #FF8C00;
-  --pixel-orange-light: #FFB700;
-  --pixel-black: #000000;
-  --pixel-white: #FFFFFF;
-  --pixel-gray: #333333;
-  --pixel-gray-light: #CCCCCC;
-  --pixel-gold: #FFD700;
-  --pixel-red: #FF4444;
-  --pixel-green: #44FF44;
+  /* Primary Colors */
+  --primary: #FFA500;
+  --primary-foreground: #000000;
   
-  /* Design Tokens */
-  --primary: var(--pixel-orange);
-  --primary-foreground: var(--pixel-black);
-  --sidebar-primary: var(--pixel-orange-dark);
-  --sidebar-primary-foreground: var(--pixel-white);
-  --chart-1: var(--pixel-orange);
-  --chart-2: var(--pixel-orange-light);
-  --chart-3: var(--pixel-gold);
-  --chart-4: var(--pixel-orange-dark);
-  --chart-5: var(--pixel-red);
+  /* Semantic Colors */
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --card: #1A1A1A;
+  --card-foreground: #FFFFFF;
+  --popover: #1A1A1A;
+  --popover-foreground: #FFFFFF;
   
-  --radius: 0px; /* No border radius for pixel art */
-  --background: var(--pixel-black);
-  --foreground: var(--pixel-white);
-  --card: var(--pixel-gray);
-  --card-foreground: var(--pixel-white);
-  --popover: var(--pixel-gray);
-  --popover-foreground: var(--pixel-white);
-  --secondary: var(--pixel-orange-dark);
-  --secondary-foreground: var(--pixel-white);
-  --muted: var(--pixel-gray);
-  --muted-foreground: var(--pixel-gray-light);
-  --accent: var(--pixel-orange);
-  --accent-foreground: var(--pixel-black);
-  --destructive: var(--pixel-red);
-  --destructive-foreground: var(--pixel-white);
-  --border: var(--pixel-orange);
-  --input: var(--pixel-gray);
-  --ring: var(--pixel-orange);
-  --sidebar: var(--pixel-black);
-  --sidebar-foreground: var(--pixel-white);
-  --sidebar-accent: var(--pixel-orange);
-  --sidebar-accent-foreground: var(--pixel-black);
-  --sidebar-border: var(--pixel-orange);
-  --sidebar-ring: var(--pixel-orange);
+  /* Secondary Colors */
+  --secondary: #333333;
+  --secondary-foreground: #FFFFFF;
+  
+  /* Muted Colors */
+  --muted: #555555;
+  --muted-foreground: #CCCCCC;
+  
+  /* Accent Colors */
+  --accent: #FFA500;
+  --accent-foreground: #000000;
+  
+  /* Status Colors */
+  --destructive: #FF0000;
+  --destructive-foreground: #FFFFFF;
+  
+  /* Borders & Inputs */
+  --border: #CC8400;
+  --input: #1A1A1A;
+  --ring: #FFA500;
+  
+  /* Charts */
+  --chart-1: #FFA500;
+  --chart-2: #FFD700;
+  --chart-3: #00FF00;
+  --chart-4: #00FFFF;
+  --chart-5: #FF00FF;
+  
+  /* Sidebar */
+  --sidebar: #0D0D0D;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFA500;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #333333;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #CC8400;
+  --sidebar-ring: #FFA500;
+  
+  /* Radius */
+  --radius: 0px;
   
   /* Animation Easing */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
 @layer base {
@@ -104,9 +112,7 @@
   
   body {
     @apply bg-background text-foreground font-mono;
-    font-family: 'Courier New', 'Courier', monospace;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    font-family: 'JetBrains Mono', 'Courier Prime', monospace;
   }
   
   button:not(:disabled),
@@ -121,94 +127,128 @@
     @apply cursor-pointer;
   }
   
-  /* Pixel Art Typography */
-  h1 {
-    @apply text-5xl font-bold text-primary uppercase tracking-wider;
-    letter-spacing: 0.1em;
-  }
-  
-  h2 {
-    @apply text-3xl font-bold text-foreground uppercase tracking-wider;
-    letter-spacing: 0.08em;
-  }
-  
-  h3 {
-    @apply text-2xl font-bold text-foreground uppercase;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Courier Prime', monospace;
+    font-weight: 700;
     letter-spacing: 0.05em;
   }
   
-  h4, h5, h6 {
-    @apply font-bold text-foreground uppercase;
-  }
-  
-  p {
-    @apply text-base leading-relaxed;
-  }
-  
-  code {
-    @apply bg-card text-primary px-2 py-1 font-mono text-sm;
-  }
-  
-  pre {
-    @apply bg-card text-primary p-4 overflow-x-auto border-2 border-primary;
-  }
+  h1 { @apply text-5xl md:text-6xl; }
+  h2 { @apply text-4xl md:text-5xl; }
+  h3 { @apply text-3xl md:text-4xl; }
+  h4 { @apply text-2xl md:text-3xl; }
+  h5 { @apply text-xl md:text-2xl; }
+  h6 { @apply text-lg md:text-xl; }
 }
 
 @layer components {
-  /* Pixel Art Button */
+  /* Premium Button Component */
   .pixel-btn {
-    @apply px-6 py-3 bg-primary text-black font-bold uppercase border-2 border-primary;
-    @apply transition-all duration-100 ease-out;
+    @apply px-6 py-3 font-bold uppercase tracking-wider;
+    @apply border-2 border-primary bg-primary text-black;
+    @apply transition-all duration-120 ease-out;
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
     @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply flex items-center justify-center gap-2;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .pixel-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out);
+  }
+  
+  .pixel-btn:hover::before {
+    opacity: 1;
   }
   
   .pixel-btn:hover {
-    background-color: var(--pixel-orange-light);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
   }
   
-  /* Pixel Art Frame */
+  .pixel-btn:active {
+    filter: brightness(0.95);
+  }
+  
+  .pixel-btn.secondary {
+    @apply bg-secondary text-foreground border-secondary;
+  }
+  
+  .pixel-btn.secondary:hover {
+    filter: brightness(1.2);
+  }
+  
+  .pixel-btn.danger {
+    @apply bg-destructive text-destructive-foreground border-destructive;
+  }
+  
+  .pixel-btn.danger:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  
+  .pixel-btn.success {
+    @apply bg-green-500 text-black border-green-500;
+  }
+  
+  .pixel-btn.success:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+  }
+  
+  .pixel-btn.small {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .pixel-btn.large {
+    @apply px-8 py-4 text-lg;
+  }
+  
+  /* Premium Frame/Card Component */
   .pixel-frame {
-    @apply border-4 border-primary bg-card p-4 relative;
-    box-shadow: inset 0 0 0 2px var(--pixel-black);
+    @apply border-2 border-primary bg-card p-4;
+    @apply relative transition-all duration-200 ease-out;
+    box-shadow: inset 0 0 0 1px rgba(255, 165, 0, 0.2);
   }
   
-  .pixel-frame::before,
-  .pixel-frame::after {
-    content: '';
-    @apply absolute w-4 h-4 border-2 border-primary;
+  .pixel-frame:hover {
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.3), inset 0 0 0 1px rgba(255, 165, 0, 0.4);
   }
   
-  .pixel-frame::before {
-    top: -8px;
-    left: -8px;
+  .pixel-frame.compact {
+    @apply p-3 border-2;
   }
   
-  .pixel-frame::after {
-    bottom: -8px;
-    right: -8px;
+  .pixel-frame-title {
+    @apply text-primary font-bold uppercase tracking-widest text-sm mb-3;
+    @apply pb-2 border-b-2 border-primary;
   }
   
-  /* Pixel Art Input */
+  /* Premium Input Component */
   .pixel-input {
-    @apply w-full px-4 py-2 bg-card text-foreground border-2 border-primary;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    @apply w-full px-4 py-2 bg-card text-foreground;
+    @apply border-2 border-muted font-mono;
+    @apply transition-all duration-150 ease-out;
+    @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
     @apply placeholder-muted-foreground;
   }
   
-  /* Pixel Art Glow Effect */
-  .pixel-glow {
-    @apply transition-all duration-150;
-    filter: drop-shadow(0 0 4px var(--pixel-orange));
+  .pixel-input:hover {
+    border-color: #CC8400;
   }
   
-  .pixel-glow:hover {
-    filter: drop-shadow(0 0 8px var(--pixel-orange)) drop-shadow(0 0 12px var(--pixel-orange-light)) !important;
+  .pixel-input:disabled {
+    @apply opacity-50 cursor-not-allowed;
   }
   
-  /* Pixel Art Container */
+  /* Premium Container */
   .container {
     width: 100%;
     margin-left: auto;
@@ -216,19 +256,14 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
+  
   @media (min-width: 640px) {
     .container {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
-
+  
   @media (min-width: 1024px) {
     .container {
       padding-left: 2rem;
@@ -237,65 +272,90 @@
     }
   }
   
-  /* Pixel Art Grid */
-  .pixel-grid {
-    @apply grid gap-4;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  .flex {
+    min-height: 0;
+    min-width: 0;
   }
   
-  /* Pixel Art Status Indicator */
-  .pixel-status {
-    @apply inline-block w-3 h-3 border border-primary;
+  /* Utility Classes */
+  .text-primary { @apply text-primary; }
+  .text-secondary { @apply text-muted-foreground; }
+  .text-tertiary { @apply text-muted; }
+  
+  .bg-surface { @apply bg-card; }
+  .border-accent { @apply border-primary; }
+  
+  /* Status Indicators */
+  .status-dot {
+    @apply inline-block w-3 h-3 rounded-full;
     animation: pixel-pulse 1.5s ease-in-out infinite;
   }
   
-  .pixel-status.online {
-    background-color: var(--pixel-green);
-  }
-  
-  .pixel-status.offline {
-    background-color: var(--pixel-red);
-  }
-  
-  .pixel-status.idle {
-    background-color: var(--pixel-orange);
-  }
+  .status-online { @apply bg-green-500; }
+  .status-offline { @apply bg-red-500; }
+  .status-idle { @apply bg-primary; }
 }
 
-/* Pixel Art Animations */
+/* Advanced Animations */
 @keyframes pixel-pulse {
   0%, 100% {
     opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7);
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.7;
+    box-shadow: 0 0 0 8px rgba(255, 165, 0, 0);
   }
 }
 
-@keyframes pixel-float {
+@keyframes pixel-glow {
   0%, 100% {
-    transform: translateY(0);
+    filter: drop-shadow(0 0 4px rgba(255, 165, 0, 0.5));
   }
   50% {
-    transform: translateY(-4px);
+    filter: drop-shadow(0 0 12px rgba(255, 165, 0, 0.8));
   }
 }
 
-@keyframes pixel-glow-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 4px var(--pixel-orange));
+@keyframes pixel-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
   }
-  50% {
-    filter: drop-shadow(0 0 12px var(--pixel-orange)) drop-shadow(0 0 8px var(--pixel-orange-light));
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-@keyframes pixel-scan {
-  0% {
-    background-position: 0 0;
+@keyframes pixel-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
   }
-  100% {
-    background-position: 0 100%;
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pixel-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pixel-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -308,24 +368,56 @@
   }
 }
 
-/* Utility Classes */
+@keyframes pixel-wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Animation Utilities */
 .animate-pixel-pulse {
   animation: pixel-pulse 1.5s ease-in-out infinite;
 }
 
-.animate-pixel-float {
-  animation: pixel-float 2s ease-in-out infinite;
+.animate-pixel-glow {
+  animation: pixel-glow 2s ease-in-out infinite;
 }
 
-.animate-pixel-glow {
-  animation: pixel-glow-pulse 2s ease-in-out infinite;
+.animate-pixel-slide-in-left {
+  animation: pixel-slide-in-left 300ms var(--ease-out) forwards;
+}
+
+.animate-pixel-slide-in-right {
+  animation: pixel-slide-in-right 300ms var(--ease-out) forwards;
+}
+
+.animate-pixel-fade-in {
+  animation: pixel-fade-in 300ms var(--ease-out) forwards;
+}
+
+.animate-pixel-scale-in {
+  animation: pixel-scale-in 300ms var(--ease-out) forwards;
 }
 
 .animate-pixel-bounce {
-  animation: pixel-bounce 0.6s ease-in-out infinite;
+  animation: pixel-bounce 1s ease-in-out infinite;
 }
 
-/* Respect Reduced Motion */
+.animate-pixel-wave {
+  animation: pixel-wave 0.6s ease-in-out infinite;
+}
+
+/* Stagger Animation Delays */
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 200ms; }
+.stagger-4 { animation-delay: 300ms; }
+.stagger-5 { animation-delay: 400ms; }
+
+/* Responsive Utilities */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -334,10 +426,33 @@
   }
 }
 
-/* Pixel Art Font Rendering */
-@supports (font-smooth: never) {
-  body {
-    -webkit-font-smoothing: none;
-    font-smooth: never;
-  }
+/* Focus Visible Styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Selection Styles */
+::selection {
+  background-color: var(--primary);
+  color: #000000;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB84D;
 }

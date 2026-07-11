@@ -11,10 +11,10 @@ interface PixelFrameProps {
 /**
  * PixelFrame Component
  * 
- * A retro GUI panel with golden orange borders and corner brackets.
- * Represents the classic 1980s computer terminal aesthetic.
+ * Premium retro GUI panel with golden orange borders.
+ * Features smooth hover effects and professional styling.
  * 
- * Design: Thick golden orange border with decorative corner elements
+ * Design: Retro arcade panel with modern polish
  */
 export const PixelFrame: React.FC<PixelFrameProps> = ({
   children,
@@ -32,22 +32,12 @@ export const PixelFrame: React.FC<PixelFrameProps> = ({
   return (
     <div
       className={`
+        pixel-frame
         relative
-        border-4 border-primary
-        bg-card
         ${variantStyles[variant]}
         ${className}
       `}
-      style={{
-        boxShadow: 'inset 0 0 0 2px var(--pixel-black)',
-      }}
     >
-      {/* Corner Brackets */}
-      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary -m-1" />
-      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary -m-1" />
-      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary -m-1" />
-      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary -m-1" />
-
       {/* Title Bar */}
       {title && (
         <div className="flex items-center gap-2 mb-4 pb-3 border-b-2 border-primary">
@@ -59,7 +49,9 @@ export const PixelFrame: React.FC<PixelFrameProps> = ({
       )}
 
       {/* Content */}
-      {children}
+      <div className="space-y-3">
+        {children}
+      </div>
     </div>
   );
 };
