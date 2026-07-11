@@ -42,84 +42,73 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Pixel Art Theme - AILA */
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
-
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  /* Pixel Art Colors */
+  --pixel-orange: #FFA500;
+  --pixel-orange-dark: #FF8C00;
+  --pixel-orange-light: #FFB700;
+  --pixel-black: #000000;
+  --pixel-white: #FFFFFF;
+  --pixel-gray: #333333;
+  --pixel-gray-light: #CCCCCC;
+  --pixel-gold: #FFD700;
+  --pixel-red: #FF4444;
+  --pixel-green: #44FF44;
+  
+  /* Design Tokens */
+  --primary: var(--pixel-orange);
+  --primary-foreground: var(--pixel-black);
+  --sidebar-primary: var(--pixel-orange-dark);
+  --sidebar-primary-foreground: var(--pixel-white);
+  --chart-1: var(--pixel-orange);
+  --chart-2: var(--pixel-orange-light);
+  --chart-3: var(--pixel-gold);
+  --chart-4: var(--pixel-orange-dark);
+  --chart-5: var(--pixel-red);
+  
+  --radius: 0px; /* No border radius for pixel art */
+  --background: var(--pixel-black);
+  --foreground: var(--pixel-white);
+  --card: var(--pixel-gray);
+  --card-foreground: var(--pixel-white);
+  --popover: var(--pixel-gray);
+  --popover-foreground: var(--pixel-white);
+  --secondary: var(--pixel-orange-dark);
+  --secondary-foreground: var(--pixel-white);
+  --muted: var(--pixel-gray);
+  --muted-foreground: var(--pixel-gray-light);
+  --accent: var(--pixel-orange);
+  --accent-foreground: var(--pixel-black);
+  --destructive: var(--pixel-red);
+  --destructive-foreground: var(--pixel-white);
+  --border: var(--pixel-orange);
+  --input: var(--pixel-gray);
+  --ring: var(--pixel-orange);
+  --sidebar: var(--pixel-black);
+  --sidebar-foreground: var(--pixel-white);
+  --sidebar-accent: var(--pixel-orange);
+  --sidebar-accent-foreground: var(--pixel-black);
+  --sidebar-border: var(--pixel-orange);
+  --sidebar-ring: var(--pixel-orange);
+  
+  /* Animation Easing */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
+    font-family: 'Courier New', 'Courier', monospace;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
   }
+  
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -131,27 +120,100 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+  
+  /* Pixel Art Typography */
+  h1 {
+    @apply text-5xl font-bold text-primary uppercase tracking-wider;
+    letter-spacing: 0.1em;
+  }
+  
+  h2 {
+    @apply text-3xl font-bold text-foreground uppercase tracking-wider;
+    letter-spacing: 0.08em;
+  }
+  
+  h3 {
+    @apply text-2xl font-bold text-foreground uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  h4, h5, h6 {
+    @apply font-bold text-foreground uppercase;
+  }
+  
+  p {
+    @apply text-base leading-relaxed;
+  }
+  
+  code {
+    @apply bg-card text-primary px-2 py-1 font-mono text-sm;
+  }
+  
+  pre {
+    @apply bg-card text-primary p-4 overflow-x-auto border-2 border-primary;
+  }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
+  /* Pixel Art Button */
+  .pixel-btn {
+    @apply px-6 py-3 bg-primary text-black font-bold uppercase border-2 border-primary;
+    @apply transition-all duration-100 ease-out;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .pixel-btn:hover {
+    background-color: var(--pixel-orange-light);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Pixel Art Frame */
+  .pixel-frame {
+    @apply border-4 border-primary bg-card p-4 relative;
+    box-shadow: inset 0 0 0 2px var(--pixel-black);
+  }
+  
+  .pixel-frame::before,
+  .pixel-frame::after {
+    content: '';
+    @apply absolute w-4 h-4 border-2 border-primary;
+  }
+  
+  .pixel-frame::before {
+    top: -8px;
+    left: -8px;
+  }
+  
+  .pixel-frame::after {
+    bottom: -8px;
+    right: -8px;
+  }
+  
+  /* Pixel Art Input */
+  .pixel-input {
+    @apply w-full px-4 py-2 bg-card text-foreground border-2 border-primary;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary;
+    @apply placeholder-muted-foreground;
+  }
+  
+  /* Pixel Art Glow Effect */
+  .pixel-glow {
+    @apply transition-all duration-150;
+    filter: drop-shadow(0 0 4px var(--pixel-orange));
+  }
+  
+  .pixel-glow:hover {
+    filter: drop-shadow(0 0 8px var(--pixel-orange)) drop-shadow(0 0 12px var(--pixel-orange-light)) !important;
+  }
+  
+  /* Pixel Art Container */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -162,16 +224,120 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
+  }
+  
+  /* Pixel Art Grid */
+  .pixel-grid {
+    @apply grid gap-4;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  /* Pixel Art Status Indicator */
+  .pixel-status {
+    @apply inline-block w-3 h-3 border border-primary;
+    animation: pixel-pulse 1.5s ease-in-out infinite;
+  }
+  
+  .pixel-status.online {
+    background-color: var(--pixel-green);
+  }
+  
+  .pixel-status.offline {
+    background-color: var(--pixel-red);
+  }
+  
+  .pixel-status.idle {
+    background-color: var(--pixel-orange);
+  }
+}
+
+/* Pixel Art Animations */
+@keyframes pixel-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pixel-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pixel-glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px var(--pixel-orange));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px var(--pixel-orange)) drop-shadow(0 0 8px var(--pixel-orange-light));
+  }
+}
+
+@keyframes pixel-scan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes pixel-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Utility Classes */
+.animate-pixel-pulse {
+  animation: pixel-pulse 1.5s ease-in-out infinite;
+}
+
+.animate-pixel-float {
+  animation: pixel-float 2s ease-in-out infinite;
+}
+
+.animate-pixel-glow {
+  animation: pixel-glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-pixel-bounce {
+  animation: pixel-bounce 0.6s ease-in-out infinite;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Pixel Art Font Rendering */
+@supports (font-smooth: never) {
+  body {
+    -webkit-font-smoothing: none;
+    font-smooth: never;
   }
 }
