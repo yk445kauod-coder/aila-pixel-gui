@@ -44,20 +44,29 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
-      {/* Header */}
-      <div className="bg-secondary border-b-4 border-primary px-4 py-6">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <h1 className="text-4xl font-bold text-primary uppercase tracking-widest">
-            SETTINGS
-          </h1>
-          <PixelButton
-            variant="secondary"
-            size="small"
-            onClick={() => setLocation('/')}
-            icon={<PixelIcon name="home" size="small" />}
-          >
-            HOME
-          </PixelButton>
+      {/* Header with Image */}
+      <div
+        className="relative h-32 md:h-40 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/manus-storage/header_settings_v2_8d26cabe.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40 flex items-center px-4">
+          <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary uppercase tracking-widest">
+              SETTINGS
+            </h1>
+            <PixelButton
+              variant="secondary"
+              size="small"
+              onClick={() => setLocation('/')}
+              icon={<PixelIcon name="home" size="small" />}
+            >
+              HOME
+            </PixelButton>
+          </div>
         </div>
       </div>
 

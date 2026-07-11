@@ -1,4 +1,4 @@
-# A.I.L.A Pixel Art GUI - Design System v2
+# A.I.L.A Pixel Art GUI - Design System v3
 
 ## Design Philosophy
 
@@ -85,6 +85,49 @@
 - **Text Color:** White (#FFFFFF)
 - **Placeholder:** Medium gray (#888888)
 - **Animation:** Border color 150ms ease-out
+
+### Icon System
+- **Format:** PNG (Pixel Art)
+- **Sizes:** Small (20px), Medium (24px), Large (32px)
+- **Color:** Golden Orange (#FFA500)
+- **Rendering:** Crisp-edges for pixel-perfect display
+- **Icons Available:**
+  - Home, Chat, Settings, User, Power
+  - Check, Close, Search, Star, Heart
+
+---
+
+## Reusable Components Library
+
+### Core Components (Pre-built)
+1. **PixelButton** - Styled buttons with variants and sizes
+2. **PixelFrame** - Card/panel containers with titles
+3. **PixelIcon** - Pixel art icon system
+4. **Mascot** - AILA character with state management
+5. **TTSLoader** - Audio visualization component
+
+### Backup Components (For Future Use)
+These components are pre-built and ready for developers to use when adding new features:
+
+1. **BackupPanel** - System backup/restore interface
+   - Location: `client/src/components/BackupPanel.tsx`
+   - Usage: Data management, backup features
+   - Features: Create backup, restore buttons
+
+2. **StepsIndicator** - Multi-step process indicator
+   - Location: `client/src/components/StepsIndicator.tsx`
+   - Usage: Wizards, onboarding, multi-step forms
+   - Features: Progress tracking, step completion
+
+3. **LoadingIndicator** - Loading spinner
+   - Location: `client/src/components/LoadingIndicator.tsx`
+   - Usage: Async operations, data loading
+   - Features: Multiple sizes, custom text, full-screen mode
+
+4. **NotificationPanel** - Alert/notification system
+   - Location: `client/src/components/NotificationPanel.tsx`
+   - Usage: System messages, alerts, feedback
+   - Features: Multiple types (info, success, warning, error), auto-dismiss
 
 ---
 
@@ -197,38 +240,146 @@ All colors are optimized for dark mode. Light mode is not supported.
 
 ---
 
+## Asset Library
+
+### Generated Images (PNG Format)
+
+#### Mascot States (256x256px)
+- `aila_idle_v2.png` - Idle state
+- `aila_working_v2.png` - Working state
+- `aila_happy_v2.png` - Happy state
+- `aila_asking_v2.png` - Asking state
+- `aila_stopped_v2.png` - Stopped state
+
+#### Icons (64x64px)
+- `icon_home_v2.png` - Home icon
+- `icon_chat_v2.png` - Chat icon
+- `icon_settings_v2.png` - Settings icon
+- `icon_user_v2.png` - User icon
+- `icon_power_v2.png` - Power icon
+- `icon_check_v2.png` - Check icon
+- `icon_close_v2.png` - Close icon
+- `icon_search_v2.png` - Search icon
+- `icon_star_v2.png` - Star icon
+- `icon_heart_v2.png` - Heart icon
+
+#### Headers (1920x400px)
+- `header_about_v2.png` - About page header
+- `header_chat_v2.png` - Chat page header
+- `header_settings_v2.png` - Settings page header
+
+#### Titles (1920x600px)
+- `title_aila_main_v2.png` - Main title with subtitle
+
+#### Backgrounds (1920x1080px)
+- `hero_matrix_moon_v2.png` - Hero section background
+- `chat_background_v2.png` - Chat interface background
+
+#### Component Images (256x256px)
+- `component_backup_panel_v2.png` - Backup panel reference
+- `component_steps_v2.png` - Steps indicator reference
+- `component_loading_v2.png` - Loading indicator reference
+- `component_notification_v2.png` - Notification panel reference
+
+---
+
 ## File Structure
 
 ```
 components/
-  ├── Mascot.tsx           # AILA character with state management
-  ├── PixelButton.tsx      # Reusable button component
-  ├── PixelFrame.tsx       # Card/panel container
-  ├── PixelIcon.tsx        # Icon system
-  ├── TTSLoader.tsx        # Audio visualization
-  └── ui/                  # shadcn/ui components
+  ├── Mascot.tsx              # AILA character with state management
+  ├── PixelButton.tsx         # Reusable button component
+  ├── PixelFrame.tsx          # Card/panel container
+  ├── PixelIcon.tsx           # Icon system (PNG-based)
+  ├── TTSLoader.tsx           # Audio visualization
+  ├── BackupPanel.tsx         # Backup/restore panel (backup)
+  ├── StepsIndicator.tsx      # Progress indicator (backup)
+  ├── LoadingIndicator.tsx    # Loading spinner (backup)
+  ├── NotificationPanel.tsx   # Notification system (backup)
+  └── ui/                     # shadcn/ui components
 
 pages/
-  ├── Home.tsx             # Landing page
-  ├── About.tsx            # Team & project info
-  ├── Chat.tsx             # Conversation interface
-  └── Settings.tsx         # Configuration panel
+  ├── Home.tsx                # Landing page
+  ├── About.tsx               # Team & project info
+  ├── Chat.tsx                # Conversation interface
+  └── Settings.tsx            # Configuration panel
 
 styles/
-  └── index.css            # Global styles, animations, tokens
+  └── index.css               # Global styles, animations, tokens
 ```
 
 ---
 
 ## Implementation Checklist
 
-- [ ] Update Tailwind config with custom colors
-- [ ] Add Google Fonts (Courier Prime, JetBrains Mono)
-- [ ] Implement animation keyframes
-- [ ] Create responsive layout system
-- [ ] Build component library with variants
-- [ ] Add focus states and accessibility
-- [ ] Test motion preferences
-- [ ] Verify color contrast
-- [ ] Optimize images for web
+- [x] Update Tailwind config with custom colors
+- [x] Add Google Fonts (Courier Prime, JetBrains Mono)
+- [x] Implement animation keyframes
+- [x] Create responsive layout system
+- [x] Build component library with variants
+- [x] Add focus states and accessibility
+- [x] Test motion preferences
+- [x] Verify color contrast
+- [x] Generate pixel art images
+- [x] Create reusable backup components
 - [ ] Test on mobile devices
+- [ ] Performance optimization
+- [ ] SEO implementation
+
+---
+
+## Developer Guide for Adding New Components
+
+### Using Backup Components
+
+When adding new features, developers can use the pre-built backup components:
+
+```tsx
+// Example: Using BackupPanel
+import { BackupPanel } from '@/components/BackupPanel';
+
+export default function DataManagement() {
+  return (
+    <BackupPanel
+      onBackup={() => console.log('Creating backup...')}
+      onRestore={() => console.log('Restoring backup...')}
+    />
+  );
+}
+
+// Example: Using StepsIndicator
+import { StepsIndicator } from '@/components/StepsIndicator';
+
+export default function Onboarding() {
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  return (
+    <StepsIndicator
+      steps={[
+        { label: 'SETUP' },
+        { label: 'CONFIG' },
+        { label: 'COMPLETE' }
+      ]}
+      currentStep={currentStep}
+    />
+  );
+}
+```
+
+### Creating New Components
+
+Follow these principles when creating new components:
+
+1. **Use PNG Assets:** Always use generated PNG images for icons and graphics
+2. **Maintain Consistency:** Follow the color palette and typography system
+3. **Animate Smoothly:** Use the defined easing functions and timing
+4. **Respect Accessibility:** Include focus states and keyboard navigation
+5. **Document Thoroughly:** Add JSDoc comments explaining usage
+
+---
+
+## Version History
+
+- **v3.0** - Added backup components, PNG icons, header images, and component library documentation
+- **v2.0** - Professional redesign with advanced animations and improved styling
+- **v1.0** - Initial design system foundation

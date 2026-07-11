@@ -52,15 +52,14 @@ export default function Home() {
             ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
           `}
         >
-          {/* Title Section */}
+          {/* Title Section with Image */}
           <div className="text-center space-y-4 animate-pixel-fade-in">
-            <h1 className="text-6xl md:text-7xl font-bold text-primary uppercase tracking-widest">
-              A.I.L.A
-            </h1>
-            <p className="text-xl md:text-2xl text-white uppercase tracking-wider font-light">
-              THE MATRIX MOON
-            </p>
-            <div className="h-1 w-24 bg-primary mx-auto" />
+            <img
+              src="/manus-storage/title_aila_main_v2_9b6dea87.png"
+              alt="A.I.L.A - The Matrix Moon"
+              className="w-full max-w-2xl h-auto object-contain"
+              style={{ imageRendering: 'crisp-edges' }}
+            />
           </div>
 
           {/* Mascot */}
