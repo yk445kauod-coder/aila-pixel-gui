@@ -1,4 +1,4 @@
-# A.I.L.A (AI Life Assistant) - Advanced Features Summary
+# A.I.L.A (AI Life Assistant) — Advanced Features Summary
 
 ## Project Status: Phase 2 - Advanced Components Built ✓
 

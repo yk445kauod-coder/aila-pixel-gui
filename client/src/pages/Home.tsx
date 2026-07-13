@@ -8,7 +8,7 @@ import PixelIcon from '@/components/PixelIcon';
 /**
  * Home Page - Landing Screen
  * 
- * Features premium hero section with Matrix Moon background,
+ * Features premium hero section with AI Life Assistant branding,
  * AILA mascot, system status panel, and smooth animations.
  * 
  * Design: Cinematic hero with professional typography and spacing
@@ -55,8 +55,8 @@ export default function Home() {
           {/* Title Section with Image */}
           <div className="text-center space-y-4 animate-pixel-fade-in">
             <img
-              src="/manus-storage/title_aila_main_v2_9b6dea87.png"
-              alt="A.I.L.A - The Matrix Moon"
+              src="/manus-storage/title_aila_correct_8321fb23.png"
+              alt="A.I.L.A - AI Life Assistant"
               className="w-full max-w-2xl h-auto object-contain"
               style={{ imageRendering: 'crisp-edges' }}
             />

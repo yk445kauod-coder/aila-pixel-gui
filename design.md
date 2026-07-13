@@ -2,7 +2,7 @@
 
 ## Design Philosophy: Retro Futurism × Cyberpunk
 
-**Theme Name:** The Matrix Moon  
+**Theme Name:** A.I.L.A - AI Life Assistant  
 **Core Aesthetic:** 16-bit pixel art meets cyberpunk futurism, inspired by classic arcade games and retro computer interfaces.
 
 ### Design Movement
@@ -32,7 +32,7 @@
 ### Signature Elements
 1. **Pixel Art Mascot (AILA)** — A cute robot/orb character with multiple emotional states (Idle, Working, Happy, Asking, Stopped)
 2. **Retro GUI Frames** — Thick golden orange borders with corner brackets, reminiscent of 1980s computer terminals
-3. **Matrix Moon Visual** — A pixelated moon made of code, representing the AI's digital nature and consciousness
+3. **Digital Consciousness Visual** — A pixelated moon made of code, representing the AI's digital nature and consciousness
 
 ### Interaction Philosophy
 - **Instant Feedback** — All buttons provide immediate visual response (scale, color shift, glow)
@@ -68,7 +68,7 @@
 ### Brand Voice
 **Headlines:** Bold, direct, futuristic  
 *Examples:*
-- "THE MATRIX MOON" (hero section)
+- "A.I.L.A - AI LIFE ASSISTANT" (hero section)
 - "AILA ONLINE" (status indicator)
 - "SYSTEM READY" (confirmation)
 
@@ -135,7 +135,7 @@
 ## Pages & Sections
 
 ### Home (Landing)
-- Hero section with Matrix Moon visual
+- Hero section with A.I.L.A - AI Life Assistant branding
 - AILA mascot in Idle state
 - "PRESS START" CTA button
 - System status panel
