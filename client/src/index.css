@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Import Pixel Art Fonts from Google */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Almarai:wght@400;700&display=swap');
+/* Import Professional Pixel Art Fonts from Google - Support AR & EN */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Courier+Prime:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono+Arabic:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -50,11 +50,12 @@
 }
 
 :root {
-  /* Pixel Art Font Stack */
-  --font-pixel-display: 'Press Start 2P', cursive;
-  --font-pixel-mono: 'VT323', monospace;
-  --font-arabic: 'Almarai', sans-serif;
-  --font-arabic-display: 'Cairo', sans-serif;
+  /* Pixel Art Font Stack - Professional & Bilingual */
+  --font-pixel-display: 'Press Start 2P', 'Courier Prime', monospace;
+  --font-pixel-mono: 'VT323', 'JetBrains Mono', monospace;
+  --font-arabic: 'IBM Plex Sans Arabic', 'IBM Plex Mono Arabic', sans-serif;
+  --font-arabic-display: 'IBM Plex Sans Arabic', sans-serif;
+  --font-code: 'JetBrains Mono', 'IBM Plex Mono Arabic', monospace;
   /* Primary Colors */
   --primary: #FFA500;
   --accent-green: #00FF00;
@@ -262,7 +263,7 @@
   .pixel-input {
     @apply w-full px-4 py-2 bg-card text-foreground;
     @apply border-2 border-muted;
-    font-family: var(--font-pixel-mono);
+    font-family: var(--font-code);
     @apply transition-all duration-150 ease-out;
     @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
     @apply placeholder-muted-foreground;

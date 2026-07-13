@@ -49,10 +49,11 @@
 - **Respect Motion:** All animations respect `prefers-reduced-motion` media query
 
 ### Typography System
-**Font Pairing:**
-- **Display/Headers:** Pixel Art Font (custom bitmap font for authentic 16-bit feel)
-- **Body/UI Text:** Monospace font with pixel-perfect rendering (e.g., "Courier New", "Consolas")
-- **Arabic Support:** Arabic pixel art font for RTL text
+**Font Pairing (Google Fonts):**
+- **Display/Headers:** Press Start 2P (English), IBM Plex Sans Arabic (Arabic) — authentic pixel art feel
+- **Body/UI Text:** VT323 (English), IBM Plex Mono Arabic (Arabic) — pixel-perfect monospace rendering
+- **Code/Terminal:** JetBrains Mono (English), IBM Plex Mono Arabic (Arabic) — professional code styling
+- **Fallbacks:** Courier Prime for English, IBM Plex Sans Arabic for Arabic — ensures consistency
 
 **Hierarchy:**
 - **H1 (Title):** 48px, bold, golden orange, all-caps
