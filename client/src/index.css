@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Import Pixel Art Fonts from Google */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Almarai:wght@400;700&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 /* Import pixel-perfect fonts */
@@ -46,8 +50,17 @@
 }
 
 :root {
+  /* Pixel Art Font Stack */
+  --font-pixel-display: 'Press Start 2P', cursive;
+  --font-pixel-mono: 'VT323', monospace;
+  --font-arabic: 'Almarai', sans-serif;
+  --font-arabic-display: 'Cairo', sans-serif;
   /* Primary Colors */
   --primary: #FFA500;
+  --accent-green: #00FF00;
+  --accent-red: #FF0000;
+  --accent-cyan: #00FFFF;
+  --accent-magenta: #FF00FF;
   --primary-foreground: #000000;
   
   /* Semantic Colors */
@@ -111,8 +124,22 @@
   }
   
   body {
-    @apply bg-background text-foreground font-mono;
-    font-family: 'JetBrains Mono', 'Courier Prime', monospace;
+    @apply bg-background text-foreground;
+    font-family: var(--font-pixel-mono);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-pixel-display);
+  }
+
+  .text-arabic {
+    font-family: var(--font-arabic);
+    direction: rtl;
+  }
+
+  .text-arabic-display {
+    font-family: var(--font-arabic-display);
+    direction: rtl;
   }
   
   button:not(:disabled),
@@ -128,7 +155,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Courier Prime', monospace;
+    font-family: var(--font-pixel-display);
     font-weight: 700;
     letter-spacing: 0.05em;
   }
@@ -234,7 +261,8 @@
   /* Premium Input Component */
   .pixel-input {
     @apply w-full px-4 py-2 bg-card text-foreground;
-    @apply border-2 border-muted font-mono;
+    @apply border-2 border-muted;
+    font-family: var(--font-pixel-mono);
     @apply transition-all duration-150 ease-out;
     @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
     @apply placeholder-muted-foreground;
