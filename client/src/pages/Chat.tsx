@@ -1,16 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'wouter';
 import Mascot from '@/components/Mascot';
 import PixelButton from '@/components/PixelButton';
 import PixelFrame from '@/components/PixelFrame';
 import PixelIcon from '@/components/PixelIcon';
 import TTSLoader from '@/components/TTSLoader';
+import { aila, ActivityLogEntry } from '@/lib/aila';
 
 interface Message {
   id: string;
   text: string;
   sender: 'user' | 'aila';
   timestamp: Date;
+  isImage?: boolean;
+  imageUrl?: string;
 }
 
 /**
@@ -20,13 +23,14 @@ interface Message {
  * message history, and smooth animations.
  * 
  * Design: Terminal-style interface with modern polish
+ * AI: Powered by Pollinations AI (Free, High-Quality)
  */
 export default function Chat() {
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'AILA ONLINE. READY TO ASSIST.',
+      text: 'مرحباً! أنا AILA - مساعد حياتك الذكي 🤖\n\nيمكنني مساعدتك في:\n• البرمجة والذكاء الاصطناعي\n• البحث والكتابة\n• الترجمة\n• تحليل البيانات\n• والمزيد!',
       sender: 'aila',
       timestamp: new Date(),
     },
@@ -34,17 +38,40 @@ export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [mascotState, setMascotState] = useState<'idle' | 'working' | 'happy'>('idle');
   const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [activityLog, setActivityLog] = useState<ActivityLogEntry[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [progressText, setProgressText] = useState('');
+  const [mode, setMode] = useState<'chat' | 'voice'>('chat');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
+  // Subscribe to activity updates
+  useEffect(() => {
+    const unsubActivity = aila.onActivity((entry) => {
+      setActivityLog(prev => [entry, ...prev.slice(0, 49)]);
+    });
+
+    const unsubProgress = aila.onProgress((prog, text) => {
+      setProgress(prog);
+      setProgressText(text);
+    });
+
+    return () => {
+      unsubActivity();
+      unsubProgress();
+    };
+  }, []);
+
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
     const userMessage: Message = {
@@ -55,25 +82,117 @@ export default function Chat() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const messageToSend = inputValue;
     setInputValue('');
     setMascotState('working');
     setIsLoading(true);
+    setProgress(0);
+    setProgressText('جاري الاتصال...');
 
-    setTimeout(() => {
-      const aiMessage: Message = {
+    try {
+      // Check for image generation command
+      const lowerMessage = messageToSend.toLowerCase();
+      if (lowerMessage.startsWith('/صورة ') || lowerMessage.startsWith('/image ')) {
+        const prompt = messageToSend.replace(/^\/(صورة|image)\s*/i, '');
+        setProgressText('جاري إنشاء الصورة...');
+        const imageUrl = await aila.generateImage(prompt);
+        
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: `تم إنشاء الصورة! 🎨`,
+          sender: 'aila',
+          timestamp: new Date(),
+          isImage: true,
+          imageUrl,
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+      } else {
+        // Regular chat
+        const response = await aila.chat(messageToSend);
+        
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: response,
+          sender: 'aila',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+      }
+      
+      setMascotState('happy');
+    } catch (error) {
+      // The AI service already returns a friendly message, just show it
+      const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'PROCESSING REQUEST... RESPONSE GENERATED.',
+        text: 'عذراً! لا يمكنني الاتصال بالذكاء الاصطناعي حالياً.\n\nيرجى المحاولة لاحقاً.',
         sender: 'aila',
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, aiMessage]);
-      setMascotState('happy');
+      setMessages((prev) => [...prev, errorMsg]);
+      setMascotState('idle');
+    } finally {
       setIsLoading(false);
+      setProgress(0);
+      setProgressText('');
 
       setTimeout(() => {
         setMascotState('idle');
       }, 2000);
-    }, 1500);
+    }
+  };
+
+  const handleVoiceInput = async () => {
+    if (isListening) {
+      setIsListening(false);
+      return;
+    }
+
+    setIsListening(true);
+    setMascotState('working');
+    setProgressText('جاري الاستماع...');
+
+    try {
+      const transcript = await aila.listen();
+      setInputValue(transcript);
+      
+      if (transcript.trim()) {
+        setIsListening(false);
+        handleSendMessage();
+      }
+    } catch (error) {
+      console.error('Voice error:', error);
+      setProgressText('');
+    } finally {
+      setIsListening(false);
+      setMascotState('idle');
+    }
+  };
+
+  const handleSpeak = async (text: string) => {
+    if (isSpeaking) return;
+    
+    setIsSpeaking(true);
+    setMascotState('working');
+    
+    try {
+      await aila.speak(text);
+    } catch (error) {
+      console.error('TTS error:', error);
+    } finally {
+      setIsSpeaking(false);
+      setMascotState('idle');
+    }
+  };
+
+  const handleClearChat = () => {
+    setMessages([{
+      id: '1',
+      text: 'تم مسح المحادثة! ابدأ محادثة جديدة 📝',
+      sender: 'aila',
+      timestamp: new Date(),
+    }]);
+    aila.clearHistory();
+    setActivityLog([]);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -85,37 +204,95 @@ export default function Chat() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
-      {/* Header with Image */}
-      <div
-        className="relative h-32 md:h-40 overflow-hidden"
-        style={{
-          backgroundImage: 'url(/manus-storage/header_chat_v2_760bc63e.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40 flex items-center px-4">
-          <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary uppercase tracking-widest">
-              CHAT
+      {/* Header */}
+      <div className="bg-gradient-to-r from-primary/20 via-secondary to-primary/20 border-b-4 border-primary px-4 py-3">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl md:text-3xl font-bold text-primary uppercase tracking-widest">
+              💬 AILA CHAT
             </h1>
-            <PixelButton
-              variant="secondary"
-              size="small"
-              onClick={() => setLocation('/')}
-              icon={<PixelIcon name="home" size="small" />}
-            >
-              HOME
-            </PixelButton>
+            {/* Mode Toggle */}
+            <div className="flex gap-2">
+              <PixelButton
+                variant={mode === 'chat' ? 'primary' : 'secondary'}
+                size="small"
+                onClick={() => setMode('chat')}
+              >
+                💬 TEXT
+              </PixelButton>
+              <PixelButton
+                variant={mode === 'voice' ? 'primary' : 'secondary'}
+                size="small"
+                onClick={() => setMode('voice')}
+              >
+                🎤 VOICE
+              </PixelButton>
+            </div>
           </div>
+          <PixelButton
+            variant="secondary"
+            size="small"
+            onClick={() => setLocation('/')}
+            icon={<PixelIcon name="home" size="small" />}
+          >
+            HOME
+          </PixelButton>
         </div>
+        
+        {/* Progress Bar */}
+        {isLoading && (
+          <div className="mt-2 max-w-6xl mx-auto">
+            <div className="flex items-center gap-2">
+              <div className="flex-1 h-2 bg-black/50 rounded overflow-hidden">
+                <div 
+                  className="h-full bg-primary transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-xs text-primary font-mono">{progressText}</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Chat Area */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left: Mascot */}
-        <div className="hidden md:flex md:w-1/4 bg-secondary border-r-4 border-primary items-center justify-center p-4">
-          <Mascot state={mascotState} size="large" animated={true} />
+        {/* Left: Mascot & Activity Log */}
+        <div className="hidden lg:flex lg:w-72 bg-secondary border-r-4 border-primary flex-col">
+          <div className="flex-1 flex flex-col items-center justify-center p-4 border-b-4 border-primary">
+            <Mascot state={mascotState} size="large" animated={true} />
+            <div className="mt-2 text-xs text-primary">
+              {isListening ? '🎤 LISTENING...' : 
+               isSpeaking ? '🔊 SPEAKING...' : 
+               isLoading ? '⏳ WORKING...' : '✓ READY'}
+            </div>
+          </div>
+          
+          {/* Activity Log */}
+          <div className="flex-1 overflow-y-auto p-2">
+            <h3 className="text-xs font-bold text-primary mb-2 uppercase">📜 ACTIVITY LOG</h3>
+            {activityLog.length === 0 ? (
+              <p className="text-xs text-muted opacity-50">No activity yet</p>
+            ) : (
+              <div className="space-y-1">
+                {activityLog.slice(0, 10).map((entry) => (
+                  <div 
+                    key={entry.id}
+                    className={`
+                      text-xs p-1 rounded
+                      ${entry.type === 'success' ? 'bg-green-500/20 text-green-400' : 
+                        entry.type === 'error' ? 'bg-red-500/20 text-red-400' :
+                        entry.type === 'warning' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-primary/10 text-primary'}
+                    `}
+                  >
+                    <span className="font-bold">{entry.action}</span>
+                    {entry.details && <span className="opacity-70 ml-1">{entry.details}</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right: Chat Messages */}
@@ -126,15 +303,15 @@ export default function Chat() {
               <div
                 key={message.id}
                 className={`
-                  flex animate-pixel-fade-in
-                  ${message.sender === 'user' ? 'justify-end' : 'justify-start'}
+                  flex animate-pixel-fade-in flex-col
+                  ${message.sender === 'user' ? 'items-end' : 'items-start'}
                 `}
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <PixelFrame
                   variant={message.sender === 'user' ? 'compact' : 'default'}
                   className={`
-                    max-w-xs md:max-w-md
+                    max-w-xl
                     ${
                       message.sender === 'user'
                         ? 'bg-primary text-black border-primary'
@@ -142,10 +319,36 @@ export default function Chat() {
                     }
                   `}
                 >
-                  <p className="text-sm font-mono break-words">{message.text}</p>
-                  <p className="text-xs mt-2 opacity-70">
-                    {message.timestamp.toLocaleTimeString()}
+                  <p className="text-sm font-mono whitespace-pre-wrap break-words leading-relaxed">
+                    {message.text}
                   </p>
+                  
+                  {/* Image Display */}
+                  {message.isImage && message.imageUrl && (
+                    <div className="mt-2">
+                      <img 
+                        src={message.imageUrl} 
+                        alt="Generated"
+                        className="max-w-full rounded border-2 border-primary/50"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center justify-between mt-2 gap-2">
+                    <p className="text-xs opacity-70">
+                      {message.timestamp.toLocaleTimeString()}
+                    </p>
+                    {message.sender === 'aila' && (
+                      <button
+                        onClick={() => handleSpeak(message.text)}
+                        className="text-xs hover:text-primary transition-colors disabled:opacity-50"
+                        disabled={isSpeaking}
+                      >
+                        {isSpeaking ? '🔊' : '🔈'} SPEAK
+                      </button>
+                    )}
+                  </div>
                 </PixelFrame>
               </div>
             ))}
@@ -154,7 +357,7 @@ export default function Chat() {
             {isLoading && (
               <div className="flex justify-start animate-pixel-fade-in">
                 <PixelFrame variant="compact">
-                  <TTSLoader isActive={true} text="THINKING..." />
+                  <TTSLoader isActive={true} text={progressText || 'PROCESSING...'} />
                 </PixelFrame>
               </div>
             )}
@@ -165,24 +368,72 @@ export default function Chat() {
           {/* Input Area */}
           <div className="border-t-4 border-primary bg-secondary p-4">
             <div className="flex gap-2">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="TYPE MESSAGE..."
-                className="pixel-input flex-1"
-                disabled={isLoading}
-              />
+              {mode === 'voice' ? (
+                <>
+                  <PixelButton
+                    variant={isListening ? 'primary' : 'secondary'}
+                    size="large"
+                    onClick={handleVoiceInput}
+                    className="w-full"
+                  >
+                    🎤 {isListening ? 'STOP LISTENING' : 'START VOICE INPUT'}
+                  </PixelButton>
+                </>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="اكتب رسالتك... / Type your message..."
+                    className="pixel-input flex-1"
+                    disabled={isLoading}
+                  />
+                  <PixelButton
+                    variant="primary"
+                    size="medium"
+                    onClick={handleSendMessage}
+                    disabled={isLoading || !inputValue.trim()}
+                    icon={<PixelIcon name="power" size="small" />}
+                  >
+                    SEND
+                  </PixelButton>
+                </>
+              )}
               <PixelButton
-                variant="primary"
+                variant="secondary"
                 size="medium"
-                onClick={handleSendMessage}
-                disabled={isLoading || !inputValue.trim()}
-                icon={<PixelIcon name="power" size="small" />}
+                onClick={handleVoiceInput}
+                disabled={isLoading}
               >
-                SEND
+                🎤
               </PixelButton>
+              <PixelButton
+                variant="secondary"
+                size="medium"
+                onClick={handleClearChat}
+                disabled={isLoading}
+              >
+                🗑️
+              </PixelButton>
+            </div>
+            
+            {/* Quick Commands */}
+            <div className="mt-2 flex flex-wrap gap-1">
+              <span className="text-xs text-muted opacity-50">Quick:</span>
+              <code className="text-xs bg-black/30 px-1 rounded cursor-pointer hover:bg-primary/20" 
+                    onClick={() => setInputValue('/صورة ')}>
+                /صورة
+              </code>
+              <code className="text-xs bg-black/30 px-1 rounded cursor-pointer hover:bg-primary/20"
+                    onClick={() => setInputValue('اكتب كود بايثون ')}>
+                كود
+              </code>
+              <code className="text-xs bg-black/30 px-1 rounded cursor-pointer hover:bg-primary/20"
+                    onClick={() => setInputValue('ترجم إلى الإنجليزية: ')}>
+                ترجمة
+              </code>
             </div>
           </div>
         </div>
